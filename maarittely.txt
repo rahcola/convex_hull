@@ -1,0 +1,51 @@
+Konveksin peitteen laskenta
+
+Tietorakenteiden harjoitustyö, alkukesa 2010
+Määrittelydokumentti
+
+Jani Rahkola
+jani.rahkola@gmail.com
+Tietojenkäsittelytieteen laitos
+Helsingin yliopisto
+
+1. Johdanto
+
+Pistejoukon A konveksi peite on joukon A pienin mahdollinen konveksi
+joukko. Joukko B on konveksi joukko jos jokaisen kahden joukon B pisteen
+välisen janan kaikki pisteet kuuluvat myös joukkoon B. Hyvänä analogiana
+toimii kumilanka. Jos ajattelemme pisteitä levyyn lyötyinä tappeina ja
+viritämme kumilangat kattamaan kaikki tapit ja päästämme siitä sitten
+irti, muodostaa kumilanka tappeina kuvatun pistejoukon konveksin
+peitteen.
+
+2. Käytettävät algoritmit ja tietorakenteet
+
+Tason piste:
+Tason piste voidaan kuvata Pythonissa tuplena.
+
+Pistejoukko:
+Joukon tarvittavat operaatiot ovat
+- y-koordinaatiltaan pienimmän pisteen etsintä
+- joukon järjestäminen
+- joukon indeksoitu läpikäynti.
+- joukon kahden pisteen paikan vaihtaminen
+Joukon esittämiseen soveltuu siis hyvin kokonaislukuindeksoitu taulukko.
+
+Konveksin peitteen laskenta:
+Graham pyyhkäisy (Graham scan) toimii ajassa O(nlogn) ja vakio tilassa.
+Lisäksi se tarvitsee apualgoritmikseen O(nlogn) ajassa ja vakio tilassa
+toimivan järjestämisalgoritmin.
+
+Pistejoukon järjestäminen:
+Joukko esitetään taulukkona, joten järjestämiseen voidaan helposti
+käyttää kekojärjestämistä. Lisäksi kekojärjestäminen toimii varmasti
+ajassa O(nlogn) ja vakiotilassa, joten se soveltuu Graham pyyhkäisyn
+järjestämisalgoritmiksi.
+
+3. Syöte ja tuloste
+
+Pistejoukko luetaan tiedostosta, jossa yhdellä rivillä kaksi luku
+välilyönnillä erotettuna kuvaavat yhtä tason pistettä. Ohjelma tulostaa
+konveksin joukon pisteet samaa formaattia käyttäen tiedostoon ja
+haluttaessa luo SVG kuvan annetusta pistejoukosta ja sen konveksista
+pisteestä.

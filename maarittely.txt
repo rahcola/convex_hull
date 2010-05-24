@@ -21,7 +21,7 @@ peitteen.
 2. Käytettävät algoritmit ja tietorakenteet
 
 Tason piste:
-Tason piste voidaan kuvata Pythonissa tuplena.
+Tason piste voidaan esittää Pythonissa tuplena.
 
 Pistejoukko:
 Joukon tarvittavat operaatiot ovat
@@ -37,15 +37,15 @@ Lisäksi se tarvitsee apualgoritmikseen O(nlogn) ajassa ja vakio tilassa
 toimivan järjestämisalgoritmin.
 
 Pistejoukon järjestäminen:
-Joukko esitetään taulukkona, joten järjestämiseen voidaan helposti
-käyttää kekojärjestämistä. Lisäksi kekojärjestäminen toimii varmasti
-ajassa O(nlogn) ja vakiotilassa, joten se soveltuu Graham pyyhkäisyn
-järjestämisalgoritmiksi.
+Joukko esitetään taulukkona, joten järjestämiseen voidaan helposti käyttää
+kekojärjestämistä. Lisäksi kekojärjestäminen toimii varmasti ajassa O(nlogn) ja
+vakiotilassa, joten se soveltuu Graham pyyhkäisyn järjestämisalgoritmiksi.
+Kekojärjestäminen vaatii tietenkin keko-operaatioiden toteuttamisen.
 
 3. Syöte ja tuloste
 
-Pistejoukko luetaan tiedostosta, jossa yhdellä rivillä kaksi luku
-välilyönnillä erotettuna kuvaavat yhtä tason pistettä. Ohjelma tulostaa
-konveksin joukon pisteet samaa formaattia käyttäen tiedostoon ja
-haluttaessa luo SVG kuvan annetusta pistejoukosta ja sen konveksista
-pisteestä.
+Pistejoukko luetaan tiedostosta, jossa yhdellä rivillä kaksi luku välilyönnillä
+erotettuna kuvaavat yhtä tason pistettä; ensimmäinen x- ja jälkimmäinen
+y-koordinaattia. Ohjelma tulostaa konveksin joukon pisteet samaa formaattia
+käyttäen tiedostoon ja haluttaessa luo SVG kuvan annetusta pistejoukosta ja sen
+konveksista pisteestä.

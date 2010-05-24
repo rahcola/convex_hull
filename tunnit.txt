@@ -1,2 +1,3 @@
 23.5.2010
 90  aiheeseen perehtyminen ja määrittelydokumentin laatiminen
+90  apufunktioiden kirjoittellua, yleisrakenteen suunnittelua

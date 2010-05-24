@@ -1,3 +1,8 @@
 23.5.2010
 90  aiheeseen perehtyminen ja määrittelydokumentin laatiminen
 90  apufunktioiden kirjoittellua, yleisrakenteen suunnittelua
+
+24.5.2010
+120 pääalgoritmi ja sen apufunktiot
+120 piirtofunktioiden laadintaa
+

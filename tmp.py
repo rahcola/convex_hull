@@ -47,49 +47,62 @@ def visualize(points, filepath, hull=[]):
     y_min = y_min_max(points)[0]
     y_max = y_min_max(points)[1]
 
-    svg_pre(x_max - x_min, y_max - y_min, filepath)
-    draw_axes(x_min, x_max, y_min, y_max, filepath)
-    draw_points(points, x_min, y_max, filepath)
-    if len(hull) > 0:
-        draw_hull(hull, filepath)
-    svg_suf(filepath)
+    svg_points = to_svg_points(points, x_min, y_max)
 
-def svg_pre(width, height, filepath):
     f = open(filepath, 'a')
+    svg_pre(x_max - x_min, y_max - y_min, f)
+    draw_axes(x_min, x_max, y_min, y_max, f)
+    draw_points(svg_points, f)
+    if len(hull) > 0:
+        draw_hull(to_svg_points(hull, x_min, y_max), f)
+    svg_suf(f)
+    f.close()
+
+def svg_pre(width, height, f):
     f.write("<?xml version=\"1.0\" standalone=\"no\"?>\n")
     f.write("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"\n")
     f.write("\"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n")
     f.write("<svg width=\"100%s\" height=\"100%s\" viewBox=\"0 0 %s %s\" version=\"1.1\" \n" \
             %('%', '%', width + 10, height + 10))
     f.write("xmlns=\"http://www.w3.org/2000/svg\">\n")
-    f.close()
 
-def svg_suf(filepath):
-    f = open(filepath, 'a')
+def svg_suf(f):
     f.write("</svg>")
-    f.close()
 
-def draw_axes(x_min, x_max, y_min, y_max, filepath):
+def to_svg_points(points, x_min, y_max):
+    svg_points = []
+    for p in points:
+        svg_points.append((p[0] - x_min, y_max - p[1]))
+    return svg_points
+
+def draw_line(start, end, f):
+    f.write("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" stroke=\"black\" stroke-width=\"1\"/>\n"\
+            %(start[0], start[1], end[0], end[1]))
+
+def draw_axes(x_min, x_max, y_min, y_max, f):
     if x_min > 0:
         x_min = 0
+    if y_min > 0:
+        y_min = 0
     x_min = abs(x_min)
-    f = open(filepath, 'a')
+    # x-axis
     f.write("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" stroke=\"black\" stroke-width=\"1\"/>\n"\
-            %(0, y_max + 1, x_max, y_max + 1))
+            %(0, y_max,2*x_max, y_max))
+    # y-axis
     f.write("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" stroke=\"black\" stroke-width=\"1\"/>\n"\
-            %(x_min, 1, x_min, y_max - y_min + 1))
-    f.close()
+            %(x_min, 0, x_min, y_max - y_min))
 
-def draw_points(points, x_min, y_max, filepath):
-    f = open(filepath, 'a')
-    for p in points:
-        x = p[0] - x_min
-        y = y_max - p[1] + 1
-        f.write("<circle cx=\"%s\" cy=\"%s\" r=\"0.001\" stroke=\"black\" stroke-width=\"1\" fill=\"black\"/>\n"%(x, y))
-    f.close()
+def draw_points(svg_points, f):
+    for p in svg_points:
+        f.write("<circle cx=\"%s\" cy=\"%s\" r=\"0.5\" stroke=\"black\" \
+                stroke-width=\"0.01\" fill=\"black\"/>\n"%(p[0], p[1]))
 
-def draw_hull(hull, filepath):
-    pass
+def draw_hull(hull, f):
+    for i in range(0, len(hull)):
+        if i+1 < len(hull):
+            draw_line(hull[i], hull[i+1], f)
+        else:
+            draw_line(hull[i], hull[0], f)
 
 def make_get_cmp_value(p):
     """Return a function that takes x and calls f(p, x).

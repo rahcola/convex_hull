@@ -6,3 +6,5 @@
 120 pääalgoritmi ja sen apufunktiot
 120 piirtofunktioiden laadintaa
 
+30.5.2010
+45  piirtofunktioden laadintaa, ovat jotakuinkin valmiina

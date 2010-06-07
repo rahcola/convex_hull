@@ -1,3 +1,5 @@
+import sys
+
 def parse_file(filepath):
     """Parse points from the file into a list.
 
@@ -76,7 +78,7 @@ def to_svg_points(points, x_min, y_max):
     return svg_points
 
 def draw_line(start, end, f):
-    f.write("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" stroke=\"black\" stroke-width=\"1\"/>\n"\
+    f.write("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" stroke=\"black\" stroke-width=\"0.01\"/>\n"\
             %(start[0], start[1], end[0], end[1]))
 
 def draw_axes(x_min, x_max, y_min, y_max, f):
@@ -86,15 +88,15 @@ def draw_axes(x_min, x_max, y_min, y_max, f):
         y_min = 0
     x_min = abs(x_min)
     # x-axis
-    f.write("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" stroke=\"black\" stroke-width=\"1\"/>\n"\
+    f.write("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" stroke=\"black\" stroke-width=\"0.01\"/>\n"\
             %(0, y_max,2*x_max, y_max))
     # y-axis
-    f.write("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" stroke=\"black\" stroke-width=\"1\"/>\n"\
+    f.write("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" stroke=\"black\" stroke-width=\"0.01\"/>\n"\
             %(x_min, 0, x_min, y_max - y_min))
 
 def draw_points(svg_points, f):
     for p in svg_points:
-        f.write("<circle cx=\"%s\" cy=\"%s\" r=\"0.5\" stroke=\"black\" \
+        f.write("<circle cx=\"%s\" cy=\"%s\" r=\"0.05\" stroke=\"black\" \
                 stroke-width=\"0.01\" fill=\"black\"/>\n"%(p[0], p[1]))
 
 def draw_hull(hull, f):
@@ -165,7 +167,6 @@ def graham_scan(points):
         return (p2[0] - p1[0])*(p3[1] - p1[1]) - (p2[1] - p1[1])*(p3[0] - p1[0]) <= 0
 
     i = index_of_lowest_y(points)
-    print points[i]
     points[1], points[i] = points[i], points[1]
     points.sort(key=make_get_cmp_value(points[1]), reverse=True)
 
@@ -181,4 +182,6 @@ def graham_scan(points):
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-    print graham_scan(parse_file('input'))
+    print graham_scan(parse_file(sys.argv[1]))
+    visualize(parse_file(sys.argv[1]), 'test.svg', graham_scan(parse_file(sys.argv[1])))
+

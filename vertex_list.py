@@ -1,6 +1,6 @@
 
 class VertexList(list):
-    """A list of (x, y) vertices. Provides a specialized sorting method for
+    """A list of (x, y) vertices. Provides a specialized methods for
     Graham scan implementation.
 
     Instance variables:
@@ -13,6 +13,7 @@ class VertexList(list):
     Methods:
         append()
         graham_sort()
+        convex_hull()
 
     Initialization:
         If a filename is given, parse vertices from file.
@@ -62,7 +63,7 @@ class VertexList(list):
 
     def __cmp_value_function(self, x):
         """Return the contangent of the angle between the x-axis and a line via
-        x and the point with the lowest y coordinate.
+        x and the vertex with the lowest y coordinate.
 
         Exceptions:
             TypeError
@@ -80,13 +81,29 @@ class VertexList(list):
         """Sort vertices to increasing order.
 
         Vertices are sort based on the angle between the x-axis and a line via
-        the point with the lowest y coordinate and the vertex itself.
+        the vertex with the lowest y coordinate and the vertex itself.
 
         """
         i = self.index(self.lowest_y)
         self[0], self[i] = self[i], self[0]
         list.sort(self, key=self.__cmp_value_function, reverse=True)
         # self.__quicksort()
+
+    def convex_hull(self):
+        def is_ccw(p1, p2, p3):
+            return (p2[0] - p1[0])*(p3[1] - p1[1]) - (p2[1] - p1[1])*(p3[0] - p1[0]) < 0
+
+        if len(self) <= 2:
+            return self
+
+        self.graham_sort()
+        m = 1
+        for i in range(2, len(self)):
+            while is_ccw(self[m-1], self[m], self[i]) and m > 0:
+                m -= 1
+            m += 1
+            self[m], self[i] = self[i], self[m]
+        return self[:m+1]
 
     def __quicksort(self):
         pass

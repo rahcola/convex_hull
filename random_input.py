@@ -1,6 +1,7 @@
 import random
 import sys
 
+random.seed(1)
 with open(sys.argv[1], 'w') as f:
     for i in range(1, 11):
         for j in range(1, 11):

@@ -11,3 +11,6 @@
 
 7.6.2010
 120 koodin jako järkeviin luokkiin ja moduleihin
+
+9.6.2010
+120 koodiin viilausta, pikaista testausta käsin

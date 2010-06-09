@@ -8,3 +8,6 @@
 
 30.5.2010
 45  piirtofunktioden laadintaa, ovat jotakuinkin valmiina
+
+7.6.2010
+120 koodin jako järkeviin luokkiin ja moduleihin

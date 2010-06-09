@@ -61,6 +61,7 @@ class VertexList(list):
                 return i
         raise ValueError('%s not in list'%(x))
 
+    # FIXME
     def __cmp_value_function(self, x):
         """Return the contangent of the angle between the x-axis and a line via
         x and the vertex with the lowest y coordinate.
@@ -91,7 +92,7 @@ class VertexList(list):
 
     def convex_hull(self):
         def is_ccw(p1, p2, p3):
-            return (p2[0] - p1[0])*(p3[1] - p1[1]) - (p2[1] - p1[1])*(p3[0] - p1[0]) < 0
+            return (p2[0] - p1[0])*(p3[1] - p1[1]) - (p2[1] - p1[1])*(p3[0] - p1[0]) <= 0
 
         if len(self) <= 2:
             return self

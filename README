@@ -1,0 +1,2 @@
+Odd bug with colinear points that align with the x-axis. The order of
+point in 'input' is relevant. Sort must be broken. Vertices with same y coord are not sorted rigth.

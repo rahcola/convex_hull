@@ -1,4 +1,5 @@
 class VertexList(list):
+
     """A list of (x, y) vertices representing a vertex set.
     
     Provides a specialized methods for Graham scan implementation.
@@ -120,12 +121,9 @@ class VertexList(list):
 
         """
         i = self.index(self.lowest_y)
-        print self.lowest_y
         self[0], self[i] = self[i], self[0]
-        print self
         # list.sort(self, cmp=self.__cmp_function)
         self.__quicksort(0, len(self)-1)
-        print self
 
     def convex_hull(self):
         """Calculate the convex hull of the vertex set.
@@ -158,12 +156,34 @@ class VertexList(list):
         return self[:m+1]
 
     def __quicksort(self, left, right):
+        """Sort self with non-stable quicksort between indices left and right.
+
+        cmp_function is used to compare two elements. When array length is
+        shorten than 20, insertion sort is used to finish the sort.
+
+        Arguments:
+            left -- first index
+            right -- last index
+
+        Exceptions:
+            TypeError
+            IndexError
+
+        """
         if right > left:
             split = self.__partition(left, right, (left+right)/2)
             self.__quicksort(left, split-1)
             self.__quicksort(split+1, right)
 
     def __partition(self, left, right, pivot):
+        """Partition self around pivot between left and right.
+        
+        A helper function for __quicksort().
+        
+        Returns:
+            The new index of the pivot value.
+            
+        """
         self[pivot], self[right] = self[right], self[pivot]
         split = left
         for i in range(left, right):

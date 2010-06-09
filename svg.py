@@ -99,6 +99,7 @@ class SVG:
         #            %(width/2, 0, width/2, height))
 
     def __to_svg_vertex(self, vertex):
+        """Convert a vertex in cartesian coordinates in to svg coordinates."""
         return (vertex[0] - self.vertices.x_min,
                 self.vertices.y_max - vertex[1] + 5)
 

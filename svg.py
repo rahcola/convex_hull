@@ -11,9 +11,9 @@ class SVG:
         vertices -- a list of (x, y) vertices
 
     Methods:
-        draw_vertex()
-        draw_line()
-        draw_hull()
+        draw_vertex((x, y))
+        draw_line((x1, y1, x2, y2))
+        draw_hull([(x, y),...])
         flush()
 
     Init:
@@ -58,7 +58,7 @@ class SVG:
         self.lines.append((x1, y1, x2, y2))
 
     def draw_hull(self, vertices):
-        """Add appropriate lines to outline the hull."""
+        """Add appropriate lines to outline the hull defined by vertices."""
         for i in range(0, len(vertices)):
             if i+1 < len(vertices):
                 self.draw_line(vertices[i][0], vertices[i][1],
@@ -80,31 +80,15 @@ class SVG:
         # y-axis
         self.draw_line(0, self.vertices.y_max, 0, y_min)
 
-        #width = self.vertices.x_max - self.vertices.x_min
-        #if self.vertices.x_max < 0:
-        #    width = abs(self.vertices.x_min)
-        #if self.vertices.x_min > 0:
-        #    width = self.vertices.x_max
-
-        #height = self.vertices.y_max - self.vertices.y_min
-        #if self.vertices.y_max < 0:
-        #    height = abs(self.vertices.y_min)
-        #if self.vertices.y_min > 0:
-        #    height = self.vertices.y_max
-        ## x-axis
-        #file.write('<line x1="%s" y1="%s" x2="%s" y2="%s" stroke="black" stroke-width="0.05"/>\n'\
-        #            %(0, height/2, width, height/2))
-        ## y-axis
-        #file.write('<line x1="%s" y1="%s" x2="%s" y2="%s" stroke="black" stroke-width="0.05"/>\n'\
-        #            %(width/2, 0, width/2, height))
-
     def __to_svg_vertex(self, vertex):
-        """Convert a vertex in cartesian coordinates in to svg coordinates."""
+        """Convert a vertex from cartesian coordinates to svg coordinates."""
         return (vertex[0] - self.vertices.x_min,
                 self.vertices.y_max - vertex[1] + 5)
 
     def flush(self):
         """Open 'filename' and write current vertecies and lines to it.
+
+        If file exists, raise IOError.
 
         Exceptions:
             IOError

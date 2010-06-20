@@ -25,7 +25,7 @@ class SVG:
         if os.path.exists(filename):
             raise IOError("file %s already exists"%(filename))
         self.filename = filename
-        self.lines = []
+        self.lines = vertex_list.VertexList()
         self.vertices = vertex_list.VertexList()
 
     def __write_prelude(self, file):

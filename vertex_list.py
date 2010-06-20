@@ -1,5 +1,3 @@
-from my_list import MyList
-
 class VertexList():
 
     """A list of (x, y) vertices representing a vertex set.
@@ -22,14 +20,15 @@ class VertexList():
         convex_hull()
 
     Initialization:
-        If a filename is given, parse vertices from file.
+        If input is str, consider it as a filename, otherwise as a list of
+        (x, y) vertices.
 
         Exceptions:
             IOError
             ValueError
 
     """
-    def __init__(self, filename=None, size=100, fst_free=0):
+    def __init__(self, input=None, size=100, fst_free=0):
         self.list = list(size*' ')
         self.length = size
         self.fst_free = fst_free
@@ -39,13 +38,16 @@ class VertexList():
         self.y_min = float('inf')
         self.y_max = float('-inf')
         self.lowest_y = (float('inf'), float('inf'))
-        if filename is not None:
-            with open(filename, 'r') as file:
+        if type(input) is str:
+            with open(input, 'r') as file:
                 for line in file:
                     line = line.split(' ')
                     x = float(line[0])
                     y = float(line[1])
                     self.append((x, y))
+        elif input is not None:
+            for v in input:
+                self.append(v)
 
     def append(self, vertex):
         """Append a vertex to list and update min and max info.

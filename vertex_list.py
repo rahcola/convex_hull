@@ -1,4 +1,6 @@
-class VertexList(list):
+from my_list import MyList
+
+class VertexList():
 
     """A list of (x, y) vertices representing a vertex set.
     
@@ -10,9 +12,12 @@ class VertexList(list):
         y_min
         y_max
         lowest_y -- vertex with the lowest y coordinate
+        list -- the actual list
+        length -- length of the list
+        fst_free -- first free index
 
     Methods:
-        append()
+        append(element)
         graham_sort()
         convex_hull()
 
@@ -24,7 +29,11 @@ class VertexList(list):
             ValueError
 
     """
-    def __init__(self, filename=None):
+    def __init__(self, filename=None, size=100, fst_free=0):
+        self.list = list(size*' ')
+        self.length = size
+        self.fst_free = fst_free
+        self.__iter_spot = 0
         self.x_min = float('inf')
         self.x_max = float('-inf')
         self.y_min = float('inf')
@@ -39,7 +48,12 @@ class VertexList(list):
                     self.append((x, y))
 
     def append(self, vertex):
-        """Append a vertex to list and update min and max info."""
+        """Append a vertex to list and update min and max info.
+        
+        Arguments:
+            vertex -- (x, y) vertex in R^2
+        
+        """
         if vertex[0] < self.x_min:
             self.x_min = vertex[0]
         if vertex[0] > self.x_max:
@@ -53,7 +67,54 @@ class VertexList(list):
         if vertex[1] > self.y_max:
             self.y_max = vertex[1]
 
-        list.append(self, vertex)
+        self.list[self.fst_free] = vertex
+        self.fst_free += 1
+        if self.fst_free == self.length:
+            self.__grow()
+
+    def __grow(self):
+        """Double the size of the list"""
+        old = list(self.list)
+        self.list = list(self.length*2*' ')
+        self.length = self.length*2
+        for i in range(0, len(old)):
+            self.list[i] = old[i]
+
+    def __getitem__(self, i):
+        """Return listitem in index i, or raise IndexError."""
+        if i < self.fst_free:
+            return self.list[i]
+        raise IndexError("list index out of range")
+
+    def __getslice__(self, s, e):
+        """Return a slice from s to e."""
+        return self.list[s:e]
+
+    def __setitem__(self, i, e):
+        """Set list item in index i to e."""
+        if i >= self.fst_free:
+            raise IndexError("list index out of range")
+        self.list[i] = e
+
+    def __len__(self):
+        """Return the length of the list."""
+        return self.fst_free
+
+    def __iter__(self):
+        """Return a iterator of the list."""
+        return self
+
+    def next(self):
+        """Return the next element in iteration, or raise StopIteration.
+
+        Only actual elements (added with append()) are iterated over.
+
+        """
+        if self.__iter_spot >= self.fst_free:
+            raise StopIteration()
+        else:
+            self.__iter_spot += 1
+            return self.list[self.__iter_spot-1]
 
     def index(self, x):
         """Return smallest i such that self[i] == x"""

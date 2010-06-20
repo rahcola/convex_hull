@@ -116,8 +116,8 @@ class SVG:
             self.__draw_axes(file)
             for v in self.vertices:
                 svg_v = self.__to_svg_vertex(v)
-                file.write('<circle cx="%s" cy="%s" r="0.1" stroke="black"\
- stroke-width="0.1" fill="black" />\n'%(svg_v[0], svg_v[1]))
+                file.write('<circle cx="%s" cy="%s" r="0.4" stroke="black"\
+ stroke-width="0.4" fill="black" />\n'%(svg_v[0], svg_v[1]))
             for l in self.lines:
                 svg_from = self.__to_svg_vertex((l[0], l[1]))
                 svg_to = self.__to_svg_vertex((l[2], l[3]))
